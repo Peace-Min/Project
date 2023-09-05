@@ -9,6 +9,7 @@ namespace Project
     public class Function
     {
         private static List<Account> accounts = new List<Account>();
+        //private static var<Account> accounts = new List<Account>();
         //private static IEnumerable<Account> accounts = new List<Account>();
         public static void Func()
         {
@@ -37,7 +38,7 @@ namespace Project
                 case 1:
                     accounts.Add(account.join());   break;
                 case 2:
-                    account.login(accounts);    break;
+                    accounts=account.login(accounts);    break;
                 case 3:
                     Print_Account();    break;
                 case 4:
