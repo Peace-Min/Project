@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,8 +10,7 @@ namespace Project
     public class Function
     {
         private static List<Account> accounts = new List<Account>();
-        //private static var<Account> accounts = new List<Account>();
-        //private static IEnumerable<Account> accounts = new List<Account>();
+        
         public static void Func()
         {
             Print();
@@ -25,10 +25,11 @@ namespace Project
         }
         public static void Print_Account()
         {
-            foreach(Account account in accounts)
+            /*foreach(Account account in accounts)
             {
-                Console.WriteLine("\n{0}고객님\t잔액{1}\n",account.Name,account.Money);
-            }
+                Console.WriteLine("\n{0}고객님\t잔액{1}\n", account.GetName(), account.GetMoney());
+            }*/
+            accounts.ForEach( n => Console.WriteLine("\n{0}고객님\t잔액{1}\n", n.GetName(), n.GetMoney()));
         }
         public static void active(int num)
         {
