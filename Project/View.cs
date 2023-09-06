@@ -9,16 +9,17 @@ using System.Threading.Tasks;
 
 namespace Project
 {
-    internal class Program
+    internal class View
     {
         public static void Main(string[] args)
         {
             Console.WriteLine("\t안녕하세요 Net-Bank입니다.\t\n");
             while (true)
             {
-                Function.Func();
+                ViewOption.Print();
             }
         }
     }
+    
 }
 
