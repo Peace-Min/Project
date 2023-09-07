@@ -67,9 +67,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountControllerService.cs" />
     <Compile Include="AccountModel.cs" />
-    <Compile Include="AccountViewModel.cs" />
+    <Compile Include="AccountController.cs" />
     <Compile Include="AccountView.cs" />
+    <Compile Include="IAccountController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
