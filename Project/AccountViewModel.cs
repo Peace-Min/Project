@@ -10,7 +10,7 @@ using System.Xml.Linq;
 namespace Project
 {
 
-    public class AccountViewModel
+    public static class AccountViewModel
     {
         private static AccountModel currentAccount = null; //클래스,메서드,인터페이스,네임스페이스,상수=> 파스칼  변수,인수=>카멜
         public static AccountModel Current
