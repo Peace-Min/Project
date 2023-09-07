@@ -35,19 +35,6 @@ namespace Project
                     break;
             }
         }
-        public static int ReadNum()
-        {
-            try
-            {
-                int num = int.Parse(Console.ReadLine());
-                return num;
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine("올바른 숫자 형식이 아닙니다.");
-                return 0;
-            }
-        }
         public static void Join() // Case 1
         {
             string name = ReadName();
@@ -99,6 +86,19 @@ namespace Project
                 default:
                     Console.WriteLine("\n잘못된 입력입니다. 숫자 1~6까지 입력해주세요\n");
                     return false;
+            }
+        }
+        public static int ReadNum()
+        {
+            try
+            {
+                int num = int.Parse(Console.ReadLine());
+                return num;
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("올바른 숫자 형식이 아닙니다.");
+                return 0;
             }
         }
         public static string ReadName()
