@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,9 +10,13 @@ using System.Xml.Linq;
 namespace Project
 {
 
-    public static class AccountViewModel
+    public class AccountViewModel
     {
-        public static AccountModel currentaccount = null;
+        private static AccountModel currentaccount = null;
+        public static AccountModel Current
+        {
+            set { currentaccount = value; }
+        }
         private const int loginchance = 5;
         public static void InitialList()
         {
@@ -235,11 +240,17 @@ namespace Project
         public static bool AccountLogin()
         {
             string name = ReadName();
-            currentaccount = FindAccount(ref name);
-            if (LoginPassword(name))
+
+            if (currentaccount == null) //singleton
+                currentaccount = FindAccount(ref name);
+            else
             {
-                return true;
+                Console.WriteLine("\nAccount isn't current\n");
+                return false;
             }
+            if (LoginPassword(name))
+                return true;
+
             return false;
         }
         public static void DepositFunc(string name, int money)
