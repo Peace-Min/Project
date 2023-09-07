@@ -142,10 +142,7 @@ namespace Project
                 Console.WriteLine("\n성공적으로 이체 완료했습니다.\n");
                 return;
             }
-            else
-            {
-                return;
-            }
+            return;
         }
         public static int ReadNum()
         {
