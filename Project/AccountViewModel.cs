@@ -53,8 +53,6 @@ namespace Project
                 AccountView.LoginMenu();
             }
             return;
-            //FindAccont에서 Login Name에 대해 전체 List에서 FInd로 하나씩 훑어가면서 검색한 Account에 대해 매번 Find ??
-            //하지만 여기서 Find로 찾은 Account를 계속 사용할 경우 그 다음부턴 코드가 서로 너무 돈독해짐 => Current Accunt 인스턴스 생성
         }
 
         public static void PrintAccount() //Case 3
@@ -86,6 +84,62 @@ namespace Project
                 default:
                     Console.WriteLine("\n잘못된 입력입니다. 숫자 1~6까지 입력해주세요\n");
                     return false;
+            }
+        }
+        public static void Deposit() //Login_Case1
+        {
+            Console.WriteLine("\n얼마를 입금하시겠습니까?\n");
+            int money = ReadNum();
+            if (money == 0) //숫자입력 x 
+                return;
+            DepositFunc(currentaccount.Name, money);
+        }
+        public static void Withdraw() //Login_Case2
+        {
+            Console.WriteLine("\n얼마를 출금하시겠습니까?\n");
+            int money = ReadNum();
+            if (money == 0) // 숫자입력 x
+                return;
+            if (WithdrawFunc(money))
+            {
+                Console.WriteLine("\n정상적으로 출금되었습니다.\n");
+            }
+        }
+        public static void YearLate() //Login_Case4
+        {
+            double n_money = (double)currentaccount.Money;
+            Console.WriteLine("\n몇 년후의 복리가 궁금하십니까?\n");
+            int year = ReadNum();
+            if (year <= 0)
+                return;
+            for (int i = 0; i < year; i++)
+            {
+                n_money *= AccountModel.rate;
+            }
+            Console.WriteLine("{0}년 후 잔액은\t{1:0.00}원 입니다.", year, n_money);
+        }
+        public static void Transfer() //Login_Case5
+        {
+            Console.WriteLine("\n누구에게 이체하시겠습니까?\n");
+            string r_name = Console.ReadLine();
+            FindAccount(ref r_name);
+            Console.WriteLine("\n얼마를 이체하시겠습니까?\n");
+            int money = ReadNum();
+            if (money == 0)
+                return;
+            if (PasswordCheck())
+            {
+                if (WithdrawFunc(money))
+                    ;
+                else
+                    return;
+                DepositFunc(r_name, money);
+                Console.WriteLine("\n성공적으로 이체 완료했습니다.\n");
+                return;
+            }
+            else
+            {
+                return;
             }
         }
         public static int ReadNum()
@@ -149,6 +203,19 @@ namespace Project
                 }
             }
         }
+        public static bool PasswordCheck()
+        {
+            Console.WriteLine("\n[{0}]고객님 비밀번호를 입력해주세요.", currentaccount.Name);
+            int password = ReadNum();
+            if (password == 0)
+                return false;
+            if (password == currentaccount.Password)
+            {
+                return true;
+            }
+            Console.WriteLine("비밀번호가 일치하지 않습니다.");
+            return false;
+        }
         public static bool LoginPassword(string name)
         {
             for (int i = 0; i < loginchance; i++) //const loginchance = 5
@@ -175,47 +242,14 @@ namespace Project
             }
             return false;
         }
-        public static bool PasswordCheck()
-        {
-            Console.WriteLine("\n[{0}]고객님 비밀번호를 입력해주세요.", currentaccount.Name);
-            int password = ReadNum();
-            if (password == 0)
-                return false;
-            if (password == currentaccount.Password)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public static void Deposit()
-        {
-            Console.WriteLine("\n얼마를 입금하시겠습니까?\n");
-            int money = ReadNum();
-            if (money == 0) //숫자입력 x 
-                return;
-            DepositFunc(currentaccount.Name, money);
-        }
         public static void DepositFunc(string name, int money)
         {
             if (string.Equals(name, currentaccount.Name)) //입금
-                currentaccount.Money+= money;
+                currentaccount.Money += money;
             else
             {
                 AccountModel receiveaccount = FindAccount(ref name); // 계좌 이체
-                receiveaccount.Money+=money;
-            }
-        }
-
-        public static void Withdraw()
-        {
-            Console.WriteLine("\n얼마를 출금하시겠습니까?\n");
-            int money = ReadNum();
-            if (money == 0) // 숫자입력 x
-                return;
-            if (WithdrawFunc(money))
-            {
-                Console.WriteLine("\n정상적으로 출금되었습니다.\n");
+                receiveaccount.Money += money;
             }
         }
         public static bool WithdrawFunc(int money)
@@ -227,7 +261,7 @@ namespace Project
                 {
                     throw new Exception("\n계좌의 잔액이 부족합니다.\n");
                 }
-                currentaccount.Money=result;
+                currentaccount.Money = result;
                 return true;
             }
             catch (Exception ex)
@@ -236,45 +270,5 @@ namespace Project
                 return false;
             }
         }
-        public static void Transfer()
-        {
-            Console.WriteLine("\n누구에게 이체하시겠습니까?\n");
-            string r_name = Console.ReadLine();
-            FindAccount(ref r_name);
-            Console.WriteLine("\n얼마를 이체하시겠습니까?\n");
-            int money = ReadNum();
-            if (money == 0)
-                return;
-            if (PasswordCheck())
-            {
-                if (WithdrawFunc(money))
-                    ;
-                else
-                    return;
-                DepositFunc(r_name, money);
-                Console.WriteLine("\n성공적으로 이체 완료했습니다.\n");
-                return;
-            }
-            else
-            {
-                Console.WriteLine("비밀번호가 일치하지 않습니다.");
-                return;
-            }
-        }
-        public static void YearLate()
-        {
-            double n_money = (double)currentaccount.Money;
-            Console.WriteLine("\n몇 년후의 복리가 궁금하십니까?\n");
-            int year = ReadNum();
-            if (year <= 0)
-                return;
-            for (int i = 0; i < year; i++)
-            {
-                n_money *= AccountModel.rate;
-            }
-            Console.WriteLine("{0}년 후 잔액은\t{1:0.00}원 입니다.", year, n_money);
-        }
     }
 }
-
-
