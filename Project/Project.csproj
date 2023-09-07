@@ -46,14 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Account.cs" />
-    <Compile Include="Initial.cs" />
-    <Compile Include="Login.cs" />
-    <Compile Include="LoginFunction.cs" />
-    <Compile Include="FrequentFunction.cs" />
-    <Compile Include="View.cs" />
+    <Compile Include="AccountModel.cs" />
+    <Compile Include="AccountViewModel.cs" />
+    <Compile Include="AccountView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewOption.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

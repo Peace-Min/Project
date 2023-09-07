@@ -12,15 +12,15 @@ using System.Xml.Linq;
 
 namespace Project
 {
-    public class Account // Model
+    public class AccountModel // Model
     {
-        public static List<Account> accounts = new List<Account>();
+        public static List<AccountModel> accounts = new List<AccountModel>();
         public static readonly double rate = 1.04; //c#에서 const대신 씀 const는 버전 관리 문제 발생?
         public string name;
         private int password;
         private int money;
-        public Account() { }
-        public Account(string name, int password)
+        public AccountModel() { }
+        public AccountModel(string name, int password)
         {
             this.name = name;
             this.password = password;
