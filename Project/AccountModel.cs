@@ -12,19 +12,31 @@ using System.Xml.Linq;
 
 namespace Project
 {
-    public class AccountModel // Model
+    public class AccountModel // Model 
     {
         public static List<AccountModel> accounts = new List<AccountModel>();
-        public const double rate = 1.04; //c#에서 const대신 씀 const는 버전 관리 문제 발생?
+        public const double rate = 1.04; 
         private string name;
         private int password;
-        private int money;
+        private int money = 0;
+        private static AccountModel currentAccount = null; //클래스,메서드,인터페이스,네임스페이스,상수=> 파스칼  변수,인수=>카멜
+        public static AccountModel Current
+        {
+            get
+            {
+                if (currentAccount == null)
+                {
+                    currentAccount = new AccountModel();
+                }
+                return currentAccount;
+            }
+            set { currentAccount = value; }
+        }
         public AccountModel() { }
         public AccountModel(string name, int password)
         {
             this.name = name;
             this.password = password;
-            this.money= 0;
         }
         public int Money
         {
