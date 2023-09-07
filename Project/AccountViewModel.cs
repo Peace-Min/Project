@@ -9,7 +9,7 @@ using System.Xml.Linq;
 namespace Project
 {
 
-    public static class AccountViewModel // Account 인스턴스 처리
+    public static class AccountViewModel
     {
         public static AccountModel currentaccount = null;
         private const int loginchance = 5;
@@ -33,19 +33,6 @@ namespace Project
                 default:
                     Console.WriteLine("잘못된 입력입니다. 숫자 1~4만 입력해주세요.\n");
                     break;
-            }
-        }
-        public static int ReadNum()
-        {
-            try
-            {
-                int num = int.Parse(Console.ReadLine());
-                return num;
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine("올바른 숫자 형식이 아닙니다.");
-                return 0;
             }
         }
         public static void Join() // Case 1
@@ -99,6 +86,19 @@ namespace Project
                 default:
                     Console.WriteLine("\n잘못된 입력입니다. 숫자 1~6까지 입력해주세요\n");
                     return false;
+            }
+        }
+        public static int ReadNum()
+        {
+            try
+            {
+                int num = int.Parse(Console.ReadLine());
+                return num;
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("올바른 숫자 형식이 아닙니다.");
+                return 0;
             }
         }
         public static string ReadName()
