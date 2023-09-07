@@ -9,7 +9,7 @@ using System.Xml.Linq;
 namespace Project
 {
 
-    public static class AccountViewModel // Account 인스턴스 처리
+    public static class AccountViewModel
     {
         public static AccountModel currentaccount = null;
         private const int loginchance = 5;
