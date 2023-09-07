@@ -112,22 +112,22 @@ namespace Project
         }
         public static void YearLate() //Login_Case4
         {
-            double n_money = (double)currentAccount.Money;
+            double futureMoney = (double)currentAccount.Money;
             Console.WriteLine("\n몇 년후의 복리가 궁금하십니까?\n");
             int year = ReadNum();
             if (year <= 0)
                 return;
             for (int i = 0; i < year; i++)
             {
-                n_money *= AccountModel.rate;
+                futureMoney *= AccountModel.rate;
             }
-            Console.WriteLine("{0}년 후 잔액은\t{1:0.00}원 입니다.", year, n_money);
+            Console.WriteLine("{0}년 후 잔액은\t{1:0.00}원 입니다.", year, futureMoney);
         }
         public static void Transfer() //Login_Case5
         {
             Console.WriteLine("\n누구에게 이체하시겠습니까?\n");
-            string r_name = Console.ReadLine();
-            FindAccount(ref r_name);
+            string readName = Console.ReadLine();
+            FindAccount(ref readName);
             Console.WriteLine("\n얼마를 이체하시겠습니까?\n");
             int money = ReadNum();
             if (money == 0)
@@ -138,7 +138,7 @@ namespace Project
                     ;
                 else
                     return;
-                DepositFunc(r_name, money);
+                DepositFunc(readName, money);
                 Console.WriteLine("\n성공적으로 이체 완료했습니다.\n");
                 return;
             }
@@ -151,8 +151,8 @@ namespace Project
         {
             try
             {
-                int num = int.Parse(Console.ReadLine());
-                return num;
+                int readNum = int.Parse(Console.ReadLine());
+                return readNum;
             }
             catch (FormatException)
             {
@@ -163,8 +163,8 @@ namespace Project
         public static string ReadName()
         {
             Console.WriteLine("고객님의 이름을 입력해주세요.");
-            string name = Console.ReadLine();
-            return name;
+            string readName = Console.ReadLine();
+            return readName;
         }
         public static int VaildPassword()
         {
@@ -183,21 +183,18 @@ namespace Project
                 }
             }
         }
-        public static bool VaildAccount(ref AccountModel account, string name)
+        public static AccountModel VaildAccount(string name)
         {
-            account = AccountModel.accounts.Find(account => account.Name == name);
-
-            if (account == null)
-                return false;
-            else
-                return true;
+            AccountModel account = AccountModel.accounts.Find(account => account.Name == name);
+            return account;
         }
-        public static AccountModel FindAccount(ref string name)
+        public static AccountModel FindAccount(ref string name) //참조형 가독성? 유효하지않는 이름인 경우 name 변경
         {
             AccountModel account = null;
             while (true)
             {
-                if (VaildAccount(ref account, name))
+                account = VaildAccount(name);
+                if (account!=null)
                 {
                     return account;
                 }
