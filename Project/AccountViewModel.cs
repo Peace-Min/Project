@@ -15,7 +15,7 @@ namespace Project
         private const int loginchance = 5;
         public static void InitialList()
         {
-            int num = int.Parse(Console.ReadLine());
+            int num = ReadNum();
             switch (num)
             {
                 case 1:
@@ -35,7 +35,19 @@ namespace Project
                     break;
             }
         }
-
+        public static int ReadNum()
+        {
+            try
+            {
+                int num = int.Parse(Console.ReadLine());
+                return num;
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("올바른 숫자 형식이 아닙니다.");
+                return 0;
+            }
+        }
         public static void Join() // Case 1
         {
             string name = ReadName();
@@ -60,12 +72,12 @@ namespace Project
 
         public static void PrintAccount() //Case 3
         {
-            AccountModel.accounts.ForEach(n => Console.WriteLine("\n{0}고객님\t잔액{1}\n", n.GetName(), n.GetMoney()));
+            AccountModel.accounts.ForEach(account => Console.WriteLine("\n{0}고객님\t잔액{1}\n", account.Name, account.Money));
         }
         public static bool LoginMenuList()
         {
-            int list_num = int.Parse(Console.ReadLine());
-            switch (list_num)
+            int listnum = ReadNum();
+            switch (listnum)
             {
                 case 1:
                     Deposit();
@@ -74,7 +86,7 @@ namespace Project
                     Withdraw();
                     return false;
                 case 3:
-                    Console.WriteLine("[{0}]님의 현재 잔액은{1}원 입니다.", currentaccount.GetName(), currentaccount.GetMoney());
+                    Console.WriteLine("[{0}]님의 현재 잔액은{1}원 입니다.", currentaccount.Name, currentaccount.Money);
                     return false;
                 case 4:
                     YearLate();
@@ -97,10 +109,11 @@ namespace Project
         }
         public static int VaildPassword()
         {
-            string r_password = Console.ReadLine();
+            string r_password;
             int password;
             while (true)
             {
+                r_password = Console.ReadLine();
                 if (r_password.Length == 4 && int.TryParse(r_password, out password))
                 {
                     return password; // 4자리 숫자
@@ -113,7 +126,7 @@ namespace Project
         }
         public static bool VaildAccount(ref AccountModel account, string name)
         {
-            account = AccountModel.accounts.Find(account => account.name == name);
+            account = AccountModel.accounts.Find(account => account.Name == name);
 
             if (account == null)
                 return false;
@@ -164,9 +177,11 @@ namespace Project
         }
         public static bool PasswordCheck()
         {
-            Console.WriteLine("\n[{0}]고객님 비밀번호를 입력해주세요.", currentaccount.GetName());
-            int password = int.Parse(Console.ReadLine());
-            if (password == currentaccount.GetPassword())
+            Console.WriteLine("\n[{0}]고객님 비밀번호를 입력해주세요.", currentaccount.Name);
+            int password = ReadNum();
+            if (password == 0)
+                return false;
+            if (password == currentaccount.Password)
             {
                 return true;
             }
@@ -176,24 +191,28 @@ namespace Project
         public static void Deposit()
         {
             Console.WriteLine("\n얼마를 입금하시겠습니까?\n");
-            int money = int.Parse(Console.ReadLine());
-            DepositFunc(currentaccount.GetName(), money);
+            int money = ReadNum();
+            if (money == 0) //숫자입력 x 
+                return;
+            DepositFunc(currentaccount.Name, money);
         }
         public static void DepositFunc(string name, int money)
         {
-            if (string.Equals(name, currentaccount.GetName())) //입금
-                currentaccount.SetMoney(currentaccount.GetMoney() + money);
+            if (string.Equals(name, currentaccount.Name)) //입금
+                currentaccount.Money+= money;
             else
             {
                 AccountModel receiveaccount = FindAccount(ref name); // 계좌 이체
-                receiveaccount.SetMoney(receiveaccount.GetMoney() + money);
+                receiveaccount.Money+=money;
             }
         }
 
         public static void Withdraw()
         {
             Console.WriteLine("\n얼마를 출금하시겠습니까?\n");
-            int money = int.Parse(Console.ReadLine());
+            int money = ReadNum();
+            if (money == 0) // 숫자입력 x
+                return;
             if (WithdrawFunc(money))
             {
                 Console.WriteLine("\n정상적으로 출금되었습니다.\n");
@@ -203,12 +222,12 @@ namespace Project
         {
             try
             {
-                int result = currentaccount.GetMoney() - money;
+                int result = currentaccount.Money - money;
                 if (result < 0)
                 {
                     throw new Exception("\n계좌의 잔액이 부족합니다.\n");
                 }
-                currentaccount.SetMoney(result);
+                currentaccount.Money=result;
                 return true;
             }
             catch (Exception ex)
@@ -223,8 +242,9 @@ namespace Project
             string r_name = Console.ReadLine();
             FindAccount(ref r_name);
             Console.WriteLine("\n얼마를 이체하시겠습니까?\n");
-            int money = int.Parse(Console.ReadLine());
-
+            int money = ReadNum();
+            if (money == 0)
+                return;
             if (PasswordCheck())
             {
                 if (WithdrawFunc(money))
@@ -243,10 +263,11 @@ namespace Project
         }
         public static void YearLate()
         {
-            double n_money = (double)currentaccount.GetMoney();
+            double n_money = (double)currentaccount.Money;
             Console.WriteLine("\n몇 년후의 복리가 궁금하십니까?\n");
-            int year = int.Parse(Console.ReadLine());
-
+            int year = ReadNum();
+            if (year <= 0)
+                return;
             for (int i = 0; i < year; i++)
             {
                 n_money *= AccountModel.rate;

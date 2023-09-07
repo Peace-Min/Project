@@ -16,9 +16,9 @@ namespace Project
     {
         public static List<AccountModel> accounts = new List<AccountModel>();
         public static readonly double rate = 1.04; //c#에서 const대신 씀 const는 버전 관리 문제 발생?
-        public string name;
-        private int password;
-        private int money;
+        private string name;
+        private int password {  get; set; }
+        private int money {  get; set; }
         public AccountModel() { }
         public AccountModel(string name, int password)
         {
@@ -26,22 +26,19 @@ namespace Project
             this.password = password;
             this.money= 0;
         }
-        public int GetMoney()
+        public int Money
         {
-            return this.money;
+            get{    return money;}
+            set {   money = value; }
         }
-        public string GetName()
+        public string Name
         {
-            return this.name;
+            get {   return name; }
         }
-        public void SetMoney(int money)
-        {
-            this.money = money;
-        }
-        public int GetPassword()
-        {
-            return this.password;
-        }
+       public int Password
+       {
+            get {   return password; }
+       }
         
     }
 }
