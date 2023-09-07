@@ -31,7 +31,7 @@ namespace Project
                 Console.WriteLine("\n1.입금\t2.출금\t3.잔액 확인\t4.복리 확인\t5.계좌 이체\t6.로그아웃\n");
                 if (AccountViewModel.LoginMenuList())
                 {
-                    AccountViewModel.Current = null;
+                    AccountViewModel.Current = null; // Current Account Singleton
                     break;
                 }
             }
