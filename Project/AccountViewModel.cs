@@ -12,22 +12,22 @@ namespace Project
 
     public class AccountViewModel
     {
-        private static AccountModel currentAccount = null; //클래스=> 파스칼 변수=>카멜
+        private static AccountModel currentAccount = null; //클래스,메서드,인터페이스,네임스페이스,상수=> 파스칼  변수,인수=>카멜
         public static AccountModel Current
         {
             set { currentAccount = value; }
         }
-        private const int loginchance = 5;
+        private const int LoginChance = 5; // 상수 => 파스칼
         public static void InitialList()
         {
-            int num = ReadNum();
-            switch (num)
+            int listOfNum = ReadNum();
+            switch (listOfNum)
             {
                 case 1:
-                    Join();
+                    RegisterAccount();
                     break;
                 case 2:
-                    Login();
+                    AccountLogin();
                     break;
                 case 3:
                     PrintAccount();
@@ -40,7 +40,7 @@ namespace Project
                     break;
             }
         }
-        public static void Join() // Case 1
+        public static void RegisterAccount() // Case 1
         {
             string name = ReadName();
 
@@ -51,9 +51,9 @@ namespace Project
             AccountModel.accounts.Add(account);
         }
 
-        public static void Login() // Case 2
+        public static void AccountLogin() // Case 2
         {
-            if (AccountLogin())
+            if (AccountLoginOfCheck())
             {
                 AccountView.LoginMenu();
             }
@@ -66,8 +66,8 @@ namespace Project
         }
         public static bool LoginMenuList()
         {
-            int listnum = ReadNum();
-            switch (listnum)
+            int listOfNum = ReadNum();
+            switch (listOfNum)
             {
                 case 1:
                     Deposit();
@@ -168,12 +168,12 @@ namespace Project
         }
         public static int VaildPassword()
         {
-            string r_password;
+            string readPassword;
             int password;
             while (true)
             {
-                r_password = Console.ReadLine();
-                if (r_password.Length == 4 && int.TryParse(r_password, out password))
+                readPassword = Console.ReadLine();
+                if (readPassword.Length == 4 && int.TryParse(readPassword, out password))
                 {
                     return password; // 4자리 숫자
                 }
@@ -223,7 +223,7 @@ namespace Project
         }
         public static bool LoginPassword(string name)
         {
-            for (int i = 0; i < loginchance; i++) //const loginchance = 5
+            for (int i = 0; i < LoginChance; i++) //const LoginChance = 5
             {
                 if (PasswordCheck())
                 {
@@ -237,7 +237,7 @@ namespace Project
             Console.WriteLine("\n5회 이상 비밀번호를 틀리셨습니다.\n");
             return false;
         }
-        public static bool AccountLogin()
+        public static bool AccountLoginOfCheck()
         {
             string name = ReadName();
 

@@ -16,10 +16,10 @@ namespace Project
             Console.WriteLine("\t안녕하세요 Net-Bank입니다.\t\n");
             while (true)
             {
-                Print();
+                InitialPrint();
             }
         }
-        public static void Print()
+        public static void InitialPrint()
         {
             Console.WriteLine("\n1.계좌 생성\t2.계좌 로그인\t3.계좌 목록\t4.종료");
             AccountViewModel.InitialList();
