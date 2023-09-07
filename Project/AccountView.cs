@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Project
 {
-    public class AccountView
+    public static class AccountView
     {
         public static void Main(string[] args)
         {
