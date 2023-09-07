@@ -10,7 +10,7 @@ using System.Xml.Linq;
 namespace Project
 {
 
-    public class AccountViewModel
+    public static class AccountViewModel
     {
         private static AccountModel currentAccount = null; //클래스,메서드,인터페이스,네임스페이스,상수=> 파스칼  변수,인수=>카멜
         public static AccountModel Current
@@ -149,16 +149,14 @@ namespace Project
         }
         public static int ReadNum()
         {
-            try
-            {
-                int readNum = int.Parse(Console.ReadLine());
+            string readNumber= Console.ReadLine();
+            if(int.TryParse(readNumber, out int readNum))
                 return readNum;
-            }
-            catch (FormatException)
+            else
             {
                 Console.WriteLine("올바른 숫자 형식이 아닙니다.");
                 return 0;
-            }
+            }  
         }
         public static string ReadName()
         {
@@ -194,7 +192,7 @@ namespace Project
             while (true)
             {
                 account = VaildAccount(name);
-                if (account!=null)
+                if (account != null)
                 {
                     return account;
                 }
