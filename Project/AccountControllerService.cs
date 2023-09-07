@@ -51,7 +51,7 @@ namespace Project
         }
         public static AccountModel FindAccount(ref string name) //참조형 가독성? 유효하지않는 이름인 경우 name 변경
         {
-            AccountModel account = null;
+            AccountModel account;
             while (true)
             {
                 account = VaildAccount(name);
@@ -99,9 +99,7 @@ namespace Project
         public static bool AccountLoginOfCheck()
         {
             string name = ReadName();
-            //AccountModel currentAccount = AccountModel.Current;
             tryLoginAccount = FindAccount(ref name);
-            //currentAccount = FindAccount(ref name);
 
             if (LoginPassword())
             {
