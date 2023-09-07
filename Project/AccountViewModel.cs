@@ -12,10 +12,10 @@ namespace Project
 
     public class AccountViewModel
     {
-        private static AccountModel currentaccount = null;
+        private static AccountModel currentAccount = null; //클래스=> 파스칼 변수=>카멜
         public static AccountModel Current
         {
-            set { currentaccount = value; }
+            set { currentAccount = value; }
         }
         private const int loginchance = 5;
         public static void InitialList()
@@ -76,7 +76,7 @@ namespace Project
                     Withdraw();
                     return false;
                 case 3:
-                    Console.WriteLine("[{0}]님의 현재 잔액은{1}원 입니다.", currentaccount.Name, currentaccount.Money);
+                    Console.WriteLine("[{0}]님의 현재 잔액은{1}원 입니다.", currentAccount.Name, currentAccount.Money);
                     return false;
                 case 4:
                     YearLate();
@@ -97,7 +97,7 @@ namespace Project
             int money = ReadNum();
             if (money == 0) //숫자입력 x 
                 return;
-            DepositFunc(currentaccount.Name, money);
+            DepositFunc(currentAccount.Name, money);
         }
         public static void Withdraw() //Login_Case2
         {
@@ -112,7 +112,7 @@ namespace Project
         }
         public static void YearLate() //Login_Case4
         {
-            double n_money = (double)currentaccount.Money;
+            double n_money = (double)currentAccount.Money;
             Console.WriteLine("\n몇 년후의 복리가 궁금하십니까?\n");
             int year = ReadNum();
             if (year <= 0)
@@ -210,11 +210,11 @@ namespace Project
         }
         public static bool PasswordCheck()
         {
-            Console.WriteLine("\n[{0}]고객님 비밀번호를 입력해주세요.", currentaccount.Name);
+            Console.WriteLine("\n[{0}]고객님 비밀번호를 입력해주세요.", currentAccount.Name);
             int password = ReadNum();
             if (password == 0)
                 return false;
-            if (password == currentaccount.Password)
+            if (password == currentAccount.Password)
             {
                 return true;
             }
@@ -241,8 +241,8 @@ namespace Project
         {
             string name = ReadName();
 
-            if (currentaccount == null) //singleton
-                currentaccount = FindAccount(ref name);
+            if (currentAccount == null) //singleton
+                currentAccount = FindAccount(ref name);
             else
             {
                 Console.WriteLine("\nAccount isn't current\n");
@@ -255,8 +255,8 @@ namespace Project
         }
         public static void DepositFunc(string name, int money)
         {
-            if (string.Equals(name, currentaccount.Name)) //입금
-                currentaccount.Money += money;
+            if (string.Equals(name, currentAccount.Name)) //입금
+                currentAccount.Money += money;
             else
             {
                 AccountModel receiveaccount = FindAccount(ref name); // 계좌 이체
@@ -267,12 +267,12 @@ namespace Project
         {
             try
             {
-                int result = currentaccount.Money - money;
+                int result = currentAccount.Money - money;
                 if (result < 0)
                 {
                     throw new Exception("\n계좌의 잔액이 부족합니다.\n");
                 }
-                currentaccount.Money = result;
+                currentAccount.Money = result;
                 return true;
             }
             catch (Exception ex)
