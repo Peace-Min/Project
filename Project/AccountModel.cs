@@ -15,7 +15,7 @@ namespace Project
     public class AccountModel // Model
     {
         public static List<AccountModel> accounts = new List<AccountModel>();
-        public static readonly double rate = 1.04; //c#에서 const대신 씀 const는 버전 관리 문제 발생?
+        public const double rate = 1.04; //c#에서 const대신 씀 const는 버전 관리 문제 발생?
         private string name;
         private int password {  get; set; }
         private int money {  get; set; }
