@@ -25,7 +25,7 @@ namespace Project
                     AccountLogin();
                     break;
                 case 3:
-                    PrintAccount();
+                    PrintAccountList();
                     break;
                 case 4:
                     Environment.Exit(0);
@@ -57,7 +57,7 @@ namespace Project
             return;
         }
 
-        public void PrintAccount() //Case 3
+        public void PrintAccountList() //Case 3
         {
             AccountModel.accounts.ForEach(account => Console.WriteLine("\n{0}고객님\t잔액{1}\n", account.Name, account.Money));
         }
@@ -67,20 +67,20 @@ namespace Project
             switch (listOfNum)
             {
                 case 1:
-                    Deposit();
+                    AccountDeposit();
                     return false;
                 case 2:
-                    Withdraw();
+                    AccountWithdraw();
                     return false;
                 case 3:
                     AccountModel currentAccount = AccountModel.Current;
                     Console.WriteLine("[{0}]님의 현재 잔액은{1}원 입니다.", currentAccount.Name, currentAccount.Money);
                     return false;
                 case 4:
-                    YearLate();
+                    AccountOfInterest();
                     return false;
                 case 5:
-                    Transfer();
+                    AccountTransfer();
                     return false;
                 case 6:
                     return true;
@@ -89,7 +89,7 @@ namespace Project
                     return false;
             }
         }
-        public void Deposit() //Login_Case1
+        public void AccountDeposit() //Login_Case1
         {
             Console.WriteLine("\n얼마를 입금하시겠습니까?\n");
             int money = AccountControllerService.ReadNum();
@@ -98,7 +98,7 @@ namespace Project
             AccountModel currentAccount = AccountModel.Current;
             AccountControllerService.DepositFunc(currentAccount.Name, money);
         }
-        public void Withdraw() //Login_Case2
+        public void AccountWithdraw() //Login_Case2
         {
             Console.WriteLine("\n얼마를 출금하시겠습니까?\n");
             int money = AccountControllerService.ReadNum();
@@ -109,21 +109,21 @@ namespace Project
                 Console.WriteLine("\n정상적으로 출금되었습니다.\n");
             }
         }
-        public void YearLate() //Login_Case4
+        public void AccountOfInterest() //Login_Case4
         {
             AccountModel currentAccount = AccountModel.Current;
             double futureMoney = (double)currentAccount.Money;
             Console.WriteLine("\n몇 년후의 복리가 궁금하십니까?\n");
-            int year = AccountControllerService.ReadNum();
-            if (year <= 0)
+            int readYear = AccountControllerService.ReadNum();
+            if (readYear <= 0)
                 return;
-            for (int i = 0; i < year; i++)
+            for (int i = 0; i < readYear; i++)
             {
                 futureMoney *= AccountModel.rate;
             }
-            Console.WriteLine("{0}년 후 잔액은\t{1:0.00}원 입니다.", year, futureMoney);
+            Console.WriteLine("{0}년 후 잔액은\t{1:0.00}원 입니다.", readYear, futureMoney);
         }
-        public void Transfer() //Login_Case5
+        public void AccountTransfer() //Login_Case5
         {
             Console.WriteLine("\n누구에게 이체하시겠습니까?\n");
             string readName = Console.ReadLine();
@@ -134,9 +134,7 @@ namespace Project
                 return;
             if (AccountControllerService.PasswordCheck())
             {
-                if (AccountControllerService.WithdrawFunc(money))
-                    ;
-                else
+                if (!AccountControllerService.WithdrawFunc(money))
                     return;
                 AccountControllerService.DepositFunc(readName, money);
                 Console.WriteLine("\n성공적으로 이체 완료했습니다.\n");
@@ -144,6 +142,5 @@ namespace Project
             }
             return;
         }
-        
     }
 }

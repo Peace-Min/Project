@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Project
 {
-    public interface IAccountController 
+    public interface IAccountController // Account의 대표적 기능 추상화
     {
         void RegisterAccount();
         void AccountLogin();
-        void PrintAccount();
-        void Deposit();
-        void Withdraw();
-        void YearLate();
-        void Transfer();
+        void PrintAccountList();
+        void AccountDeposit();
+        void AccountWithdraw();
+        void AccountOfInterest(); //n년 후 잔액 확인
+        void AccountTransfer();
     }
 }
