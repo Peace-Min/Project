@@ -35,7 +35,7 @@ namespace Project
                     break;
             }
         }
-      
+
         public void RegisterAccount() // Case 1
         {
             string name = AccountControllerService.ReadName();
@@ -47,16 +47,11 @@ namespace Project
             AccountModel.accounts.Add(account);
 
         }
-
         public void AccountLogin() // Case 2
         {
             if (AccountControllerService.AccountLoginOfCheck())
-            {
                 AccountView.LoginMenu();
-            }
-            return;
         }
-
         public void PrintAccountList() //Case 3
         {
             AccountModel.accounts.ForEach(account => Console.WriteLine("\n{0}고객님\t잔액{1}\n", account.Name, account.Money));
@@ -95,6 +90,7 @@ namespace Project
             int money = AccountControllerService.ReadNum();
             if (money == 0) //숫자입력 x 
                 return;
+
             AccountModel currentAccount = AccountModel.Current;
             AccountControllerService.DepositFunc(currentAccount.Name, money);
         }
@@ -104,10 +100,9 @@ namespace Project
             int money = AccountControllerService.ReadNum();
             if (money == 0) // 숫자입력 x
                 return;
+
             if (AccountControllerService.WithdrawFunc(money))
-            {
                 Console.WriteLine("\n정상적으로 출금되었습니다.\n");
-            }
         }
         public void AccountOfInterest() //Login_Case4
         {
@@ -115,12 +110,13 @@ namespace Project
             double futureMoney = (double)currentAccount.Money;
             Console.WriteLine("\n몇 년후의 복리가 궁금하십니까?\n");
             int readYear = AccountControllerService.ReadNum();
+
             if (readYear <= 0)
                 return;
+
             for (int i = 0; i < readYear; i++)
-            {
                 futureMoney *= AccountModel.rate;
-            }
+
             Console.WriteLine("{0}년 후 잔액은\t{1:0.00}원 입니다.", readYear, futureMoney);
         }
         public void AccountTransfer() //Login_Case5
@@ -132,15 +128,14 @@ namespace Project
             int money = AccountControllerService.ReadNum();
             if (money == 0)
                 return;
+
             if (AccountControllerService.PasswordCheck())
             {
                 if (!AccountControllerService.WithdrawFunc(money))
                     return;
                 AccountControllerService.DepositFunc(readName, money);
                 Console.WriteLine("\n성공적으로 이체 완료했습니다.\n");
-                return;
             }
-            return;
         }
     }
 }

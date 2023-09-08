@@ -30,11 +30,10 @@ namespace Project
         public static int VaildPassword()
         {
             string readPassword;
-            int password;
             while (true)
             {
                 readPassword = Console.ReadLine();
-                if (readPassword.Length == 4 && int.TryParse(readPassword, out password))
+                if (readPassword.Length == 4 && int.TryParse(readPassword, out int password))
                 {
                     return password; // 4자리 숫자
                 }
@@ -56,9 +55,7 @@ namespace Project
             {
                 account = VaildAccount(name);
                 if (account != null)
-                {
                     return account;
-                }
                 else
                 {
                     Console.WriteLine("존재하지않는 Account입니다.\n다시 한번 이름을 입력해주세요.\n");
@@ -68,15 +65,14 @@ namespace Project
         }
         public static bool PasswordCheck()
         {
-            //AccountModel currentAccount = AccountModel.Current;
             Console.WriteLine("\n[{0}]고객님 비밀번호를 입력해주세요.", tryLoginAccount.Name);
             int password = ReadNum();
             if (password == 0)
                 return false;
+
             if (password == tryLoginAccount.Password)
-            {
                 return true;
-            }
+
             Console.WriteLine("비밀번호가 일치하지 않습니다.");
             return false;
         }
@@ -85,13 +81,10 @@ namespace Project
             for (int i = 0; i < LoginChance; i++) //const LoginChance = 5
             {
                 if (PasswordCheck())
-                {
                     return true;
-                }
+
                 else
-                {
                     Console.WriteLine("비밀번호가 다릅니다. {0}회 이상 틀림", i + 1);
-                }
             }
             Console.WriteLine("\n5회 이상 비밀번호를 틀리셨습니다.\n");
             return false;
@@ -103,7 +96,6 @@ namespace Project
 
             if (LoginPassword())
             {
-
                 AccountModel.Current = tryLoginAccount;
                 return true;
             }
@@ -114,6 +106,7 @@ namespace Project
             AccountModel currentAccount = AccountModel.Current;
             if (string.Equals(name, currentAccount.Name))
                 currentAccount.Money += money;
+
             else
             {
                 AccountModel receiveaccount = FindAccount(ref name); // 계좌 이체
@@ -127,9 +120,8 @@ namespace Project
             {
                 int result = currentAccount.Money - money;
                 if (result < 0)
-                {
                     throw new Exception("\n계좌의 잔액이 부족합니다.\n");
-                }
+
                 currentAccount.Money = result;
                 return true;
             }
