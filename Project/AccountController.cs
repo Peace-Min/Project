@@ -29,7 +29,7 @@ namespace Project
         {
             if (AccountControllerService.AccountLoginOfCheck())
             {
-                currentAccount = currentAccount.Current;
+                currentAccount = AccountModel.currentAccount;
                 return true;
             }
 

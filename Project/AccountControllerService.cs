@@ -44,7 +44,7 @@ namespace Project
         }
         public static AccountModel VaildAccount(string name)
         {
-            AccountModel account=accountModel.Accounts.Find(account => account.Name == name);
+            AccountModel account=accountModel.Accounts.Find(account => account.name == name);
             return account;
         }
         public static AccountModel FindAccount(ref string name) //참조형 가독성? 유효하지않는 이름인 경우 name 변경
@@ -105,23 +105,23 @@ namespace Project
         public static void DepositFunc(string name, int money,AccountModel accountModel)
         {
             if (string.Equals(name, accountModel.Name))
-                accountModel.Money += money;
+                accountModel.money += money;
 
             else
             {
                 AccountModel receiveaccount = FindAccount(ref name); // 계좌 이체
-                receiveaccount.Money += money;
+                receiveaccount.money += money;
             }
         }
         public static bool WithdrawFunc(int money,AccountModel accountModel)
         {
             try
             {
-                int result = accountModel.Money - money;
+                int result = accountModel.money - money;
                 if (result < 0)
                     throw new Exception("\n계좌의 잔액이 부족합니다.\n");
 
-                accountModel.Money = result;
+                accountModel.money = result;
                 return true;
             }
             catch (Exception ex)

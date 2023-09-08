@@ -16,20 +16,13 @@ namespace Project
     {
         private static List<AccountModel> accounts = new List<AccountModel>();
         private double rate { get { return rate; } set { rate = 1.04; } } // 이율 
-        private string name { get { return name; } set { name = value; } }
-        private int password { get { return password; } set { password = value; } }
-        private int money;
-        private static AccountModel currentAccount = null; //클래스,메서드,인터페이스,네임스페이스,상수=> 파스칼  변수,인수=>카멜
-        public AccountModel Current
-        {
-            get
-            {
-                currentAccount ??= new AccountModel(); // if(currentAccount==null) currentAccount= new AccountModel();
-         
-                return currentAccount;
-            }
-            set { currentAccount = value; }
-        }
+        public string name { get { return name; } set { name = value; } }
+        public int password { get { return password; } set { password = value; } }
+        public int money;
+        public static AccountModel currentAccount { get { return currentAccount; } set { currentAccount= value; } } 
+        //클래스,메서드,인터페이스,네임스페이스,상수=> 파스칼  변수,인수=>카멜
+
+
         public List<AccountModel> Accounts
         {
             get { return accounts; }
@@ -41,6 +34,8 @@ namespace Project
             this.name = name;
             this.password = password;
             this.money = 0;
+            Console.WriteLine(this.name + this.password);
+            currentAccount = this;
         }
       
     }
