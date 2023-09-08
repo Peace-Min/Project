@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Project
 {
-    public static class AccountControllerService // 구체적 기능 메소드 구현
+    public class AccountControllerService // 구체적 기능 메소드 구현
     {
         private const int LoginChance = 5;
         private static AccountModel tryLoginAccount = new AccountModel();
+        private static AccountModel accountModel = new AccountModel();
         public static int ReadNum()
         {
             string readNumber = Console.ReadLine();
@@ -43,7 +44,7 @@ namespace Project
         }
         public static AccountModel VaildAccount(string name)
         {
-            AccountModel account = AccountModel.accounts.Find(account => account.Name == name);
+            AccountModel account=accountModel.Accounts.Find(account => account.Name == name);
             return account;
         }
         public static AccountModel FindAccount(ref string name) //참조형 가독성? 유효하지않는 이름인 경우 name 변경
@@ -95,16 +96,16 @@ namespace Project
 
             if (LoginPassword())
             {
-                AccountModel.Current = tryLoginAccount;
+                AccountModel accountModel = new AccountModel();
+                accountModel.Current = tryLoginAccount;
                 return true;
             }
             return false;
         }
-        public static void DepositFunc(string name, int money)
+        public static void DepositFunc(string name, int money,AccountModel accountModel)
         {
-            AccountModel currentAccount = AccountModel.Current;
-            if (string.Equals(name, currentAccount.Name))
-                currentAccount.Money += money;
+            if (string.Equals(name, accountModel.Name))
+                accountModel.Money += money;
 
             else
             {
@@ -112,16 +113,15 @@ namespace Project
                 receiveaccount.Money += money;
             }
         }
-        public static bool WithdrawFunc(int money)
+        public static bool WithdrawFunc(int money,AccountModel accountModel)
         {
-            AccountModel currentAccount = AccountModel.Current;
             try
             {
-                int result = currentAccount.Money - money;
+                int result = accountModel.Money - money;
                 if (result < 0)
                     throw new Exception("\n계좌의 잔액이 부족합니다.\n");
 
-                currentAccount.Money = result;
+                accountModel.Money = result;
                 return true;
             }
             catch (Exception ex)

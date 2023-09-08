@@ -20,7 +20,8 @@ namespace Project
                     accountController.RegisterAccount();
                     break;
                 case 2:
-                    accountController.AccountLogin();
+                    if(accountController.AccountLogin())
+                        LoginMenuScreen();
                     break;
                 case 3:
                     accountController.PrintAccountList();
@@ -39,7 +40,6 @@ namespace Project
             while (true)
             {
                 Console.WriteLine("\n1.입금\t2.출금\t3.잔액 확인\t4.복리 확인\t5.계좌 이체\t6.로그아웃\n");
-
                 int listOfNum = AccountControllerService.ReadNum();
                 switch (listOfNum)
                 {
@@ -50,8 +50,7 @@ namespace Project
                         accountController.AccountWithdraw();
                         break;
                     case 3:
-                        AccountModel currentAccount = AccountModel.Current;
-                        Console.WriteLine("[{0}]님의 현재 잔액은{1}원 입니다.", currentAccount.Name, currentAccount.Money);
+                        accountController.AccountInformation();
                         break;
                     case 4:
                         accountController.AccountOfInterest();
