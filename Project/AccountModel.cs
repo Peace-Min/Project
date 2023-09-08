@@ -15,9 +15,9 @@ namespace Project
     public class AccountModel // Model 
     {
         private static List<AccountModel> accounts = new List<AccountModel>();
-        public double rate { get; private set; } = 1.04;  
-        private string name;
-        private int password;
+        private double rate { get { return rate; } set { rate = 1.04; } } // 이율 
+        private string name { get { return name; } set { name = value; } }
+        private int password { get { return password; } set { password = value; } }
         private int money;
         private static AccountModel currentAccount = null; //클래스,메서드,인터페이스,네임스페이스,상수=> 파스칼  변수,인수=>카멜
         public AccountModel Current
@@ -42,19 +42,6 @@ namespace Project
             this.password = password;
             this.money = 0;
         }
-        public int Money
-        {
-            get{    return money;}
-            set {   money = value; }
-        }
-        public string Name
-        {
-            get {   return name; }
-        }
-       public int Password
-       {
-            get {   return password; }
-       }
-        
+      
     }
 }
