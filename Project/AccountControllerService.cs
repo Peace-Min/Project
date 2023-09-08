@@ -15,6 +15,7 @@ namespace Project
             string readNumber = Console.ReadLine();
             if (int.TryParse(readNumber, out int readNum))
                 return readNum;
+
             else
             {
                 Console.WriteLine("올바른 숫자 형식이 아닙니다.");
@@ -34,13 +35,10 @@ namespace Project
             {
                 readPassword = Console.ReadLine();
                 if (readPassword.Length == 4 && int.TryParse(readPassword, out int password))
-                {
                     return password; // 4자리 숫자
-                }
+
                 else
-                {
                     Console.WriteLine("고객님의 계좌의 비밀번호를 규칙을 지켜 다시 설정해주세요. !! [4자리 숫자] !!");
-                }
             }
         }
         public static AccountModel VaildAccount(string name)
@@ -56,6 +54,7 @@ namespace Project
                 account = VaildAccount(name);
                 if (account != null)
                     return account;
+
                 else
                 {
                     Console.WriteLine("존재하지않는 Account입니다.\n다시 한번 이름을 입력해주세요.\n");
