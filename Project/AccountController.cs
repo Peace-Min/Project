@@ -13,29 +13,7 @@ namespace Project
     public class AccountController : IAccountController // 인터페이스 구현
     {
         private const int LoginChance = 5; // 상수 => 파스칼
-        public void InitialList()
-        {
-            int listOfNum = AccountControllerService.ReadNum();
-            switch (listOfNum)
-            {
-                case 1:
-                    RegisterAccount();
-                    break;
-                case 2:
-                    AccountLogin();
-                    break;
-                case 3:
-                    PrintAccountList();
-                    break;
-                case 4:
-                    Environment.Exit(0);
-                    break;
-                default:
-                    Console.WriteLine("잘못된 입력입니다. 숫자 1~4만 입력해주세요.\n");
-                    break;
-            }
-        }
-
+     
         public void RegisterAccount() // Case 1
         {
             string name = AccountControllerService.ReadName();
@@ -50,40 +28,13 @@ namespace Project
         public void AccountLogin() // Case 2
         {
             if (AccountControllerService.AccountLoginOfCheck())
-                AccountView.LoginMenu();
+                MenuScreenUI.LoginMenuScreen();
         }
         public void PrintAccountList() //Case 3
         {
             AccountModel.accounts.ForEach(account => Console.WriteLine("\n{0}고객님\t잔액{1}\n", account.Name, account.Money));
         }
-        public bool LoginMenuList()
-        {
-            int listOfNum = AccountControllerService.ReadNum();
-            switch (listOfNum)
-            {
-                case 1:
-                    AccountDeposit();
-                    return false;
-                case 2:
-                    AccountWithdraw();
-                    return false;
-                case 3:
-                    AccountModel currentAccount = AccountModel.Current;
-                    Console.WriteLine("[{0}]님의 현재 잔액은{1}원 입니다.", currentAccount.Name, currentAccount.Money);
-                    return false;
-                case 4:
-                    AccountOfInterest();
-                    return false;
-                case 5:
-                    AccountTransfer();
-                    return false;
-                case 6:
-                    return true;
-                default:
-                    Console.WriteLine("\n잘못된 입력입니다. 숫자 1~6까지 입력해주세요\n");
-                    return false;
-            }
-        }
+        
         public void AccountDeposit() //Login_Case1
         {
             Console.WriteLine("\n얼마를 입금하시겠습니까?\n");

@@ -72,6 +72,7 @@
     <Compile Include="AccountController.cs" />
     <Compile Include="AccountView.cs" />
     <Compile Include="IAccountController.cs" />
+    <Compile Include="MenuScreenUI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
