@@ -24,10 +24,8 @@ namespace Project
         {
             get
             {
-                if (currentAccount == null)
-                {
-                    currentAccount = new AccountModel();
-                }
+                currentAccount ??= new AccountModel(); // if(currentAccount==null) currentAccount= new AccountModel();
+         
                 return currentAccount;
             }
             set { currentAccount = value; }
